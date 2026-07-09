@@ -1,3 +1,4 @@
+import pandas as pd
 from datetime import date, datetime, timedelta
 from urllib.request import urlopen
 from zipfile import ZipFile
@@ -67,5 +68,12 @@ def read_gdelt(
             f"http://data.gdeltproject.org/gdeltv2/{(start_date + timedelta(minutes=15 * i)).strftime('%Y%m%d%H%M%S')}.gkg.csv.zip"
         )
 
+    for url in url_list:
+        with urlopen(url) as response:
+            with ZipFile(BytesIO(response.read())) as zip_file:
+                with zip_file.open(zip_file.namelist()[0]) as f:
+                    df = pd.read_csv(f, sep="\t", header=None)
+                    print(df)
 
-read_gdelt("asdf", "fds")
+
+read_gdelt("2020-01-01 12:00", "2020-01-01 12:15")
