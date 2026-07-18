@@ -1,22 +1,17 @@
-"""
-An interface for what kinds of paramaters the many different type of gdelt 
-datasets have. Parameters are based on the fields of the gdelt object made
-(v1 event, v1 global (GKG), v2 event, v2 global(GKG), Visual graph, etc.).
-"""
-
 from dataclasses import dataclass
-from typing import Optional, Iterable, Iterator
+from typing import Optional
+
 
 @dataclass
-class gdeltEvent:
-    """one singular record of the gdeltEvents1 set"""
-    
+class EventV2:
+    """One record of the GDELT 2.0 Event table"""
+
     # EventID and attributes
-    GlobalEventID : int
-    Day : int
+    GlobalEventID: int
+    Day: int
     MonthYear: int
     Year: int
-    FractionDate : float
+    FractionDate: float
 
     # Actor1 attributes
     Actor1Code: Optional[str]
@@ -29,7 +24,7 @@ class gdeltEvent:
     Actor1Type1Code: Optional[str]
     Actor1Type2Code: Optional[str]
     Actor1Type3Code: Optional[str]
- 
+
     # Actor2 attributes
     Actor2Code: Optional[str]
     Actor2Name: Optional[str]
@@ -41,7 +36,7 @@ class gdeltEvent:
     Actor2Type1Code: Optional[str]
     Actor2Type2Code: Optional[str]
     Actor2Type3Code: Optional[str]
- 
+
     # Event action attributes
     IsRootEvent: bool
     EventCode: str
@@ -53,42 +48,62 @@ class gdeltEvent:
     NumSources: int
     NumArticles: int
     AvgTone: float
- 
+
     # Actor1 event geography
     Actor1Geo_Type: Optional[int]
     Actor1Geo_Fullname: Optional[str]
     Actor1Geo_CountryCode: Optional[str]
     Actor1Geo_ADM1Code: Optional[str]
+    Actor1Geo_ADM2Code: Optional[str]
     Actor1Geo_Lat: Optional[float]
     Actor1Geo_Long: Optional[float]
     Actor1Geo_FeatureID: Optional[int]
- 
+
     # Actor2 event geography
     Actor2Geo_Type: Optional[int]
     Actor2Geo_Fullname: Optional[str]
     Actor2Geo_CountryCode: Optional[str]
     Actor2Geo_ADM1Code: Optional[str]
+    Actor2Geo_ADM2Code: Optional[str]
     Actor2Geo_Lat: Optional[float]
     Actor2Geo_Long: Optional[float]
     Actor2Geo_FeatureID: Optional[int]
- 
+
     # Action event geography
     ActionGeo_Type: Optional[int]
     ActionGeo_Fullname: Optional[str]
     ActionGeo_CountryCode: Optional[str]
     ActionGeo_ADM1Code: Optional[str]
+    ActionGeo_ADM2Code: Optional[str]
     ActionGeo_Lat: Optional[float]
     ActionGeo_Long: Optional[float]
     ActionGeo_FeatureID: Optional[int]
- 
+
     # Data management fields
     DATEADDED: int
-    SOURCEURL: Optional[str] = None 
-    
+    SOURCEURL: Optional[str] = None
 
 
-class gdeltEvents1:
-    def __init__(self, events: list[gdeltEvent]):
-        self.events = events
-        return self
-        
+class EventV2Collection:
+    """A list of Event records from the GDELT 2.0 Event table"""
+
+
+class Mention:
+    """One record of the GDELT 2.0 Mentions table."""
+
+    GlobalEventID: int
+    EventTimeDate: int
+    MentionTimeDate: int
+    MentionType: int
+    MentionSourceName: Optional[str]
+    MentionIdentifier: Optional[str]
+    SentenceID: Optional[int]
+    Actor1CharOffset: Optional[int]
+    Actor2CharOffset: Optional[int]
+    ActionCharOffset: Optional[int]
+    InRawText: bool
+    Confidence: int
+    MentionDocLen: Optional[int]
+    MentionDocTone: Optional[float]
+    MentionDocTranslationInfo: Optional[str]
+    Extras: Optional[str]
