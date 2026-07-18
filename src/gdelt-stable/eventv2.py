@@ -1,3 +1,8 @@
+"""
+GDELT 2.0 Event database record definitons.
+Contains both the Event table and its companion Mentions table.
+"""
+
 from dataclasses import dataclass
 from typing import Optional
 

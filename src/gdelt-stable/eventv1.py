@@ -1,7 +1,5 @@
 """
-An interface for what kinds of paramaters the many different type of gdelt
-datasets have. Parameters are based on the fields of the gdelt object made
-(v1 event, v1 global (GKG), v2 event, v2 global(GKG), Visual graph, etc.).
+GDELT 1.0 Event database record definitons.
 """
 
 from dataclasses import dataclass
