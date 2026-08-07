@@ -7,7 +7,6 @@ that are disabled specifically for the television collection and are
 defined here.
 """
 
-
 DISABLED_FIELDS = (
     "SharingImage",
     "RelatedImages",
