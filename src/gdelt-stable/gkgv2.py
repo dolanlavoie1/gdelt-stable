@@ -6,7 +6,9 @@ record per document, with the counts-only file discontinued. Fields prefaced
 with "V1" in the documentation are unchanged from the 1.0 format, those
 prefaced with "V2" carry the character offset of each reference in the
 document. I likely could have reused the object definition but felt it was
-better to keep all object types contained in their own file. 
+better to keep all object types contained in their own file.
+
+Added support for the American Television Special collection
 """
 
 from dataclasses import dataclass, field
@@ -155,6 +157,32 @@ class CitationV2:
 
 
 @dataclass
+class CharTimecodeOffsetV2:
+    """One mapping of the V2EXTRASXML CHARTIMECODEOFFSETTOC block.
+
+    Only available for the television subcollection, where it maps a character
+    offset in the closed captioning stream to its timecode offset in seconds
+    from the start of the broadcast.
+    """
+
+    CharacterOffset: int
+    TimecodeOffset: int
+
+
+@dataclass
+class ExtrasV2:
+    """The blocks of the V2EXTRASXML field, blank for news content.
+
+    Each block holds specialized data applicable only to a subset of the
+    collection, so a record carries at most the blocks of its own
+    subcollection.
+    """
+
+    CitedReferencesList: List[CitationV2] = field(default_factory=list)
+    CharTimecodeOffsetTOC: List[CharTimecodeOffsetV2] = field(default_factory=list)
+
+
+@dataclass
 class GKGV2:
     """One document record of the GDELT GKG 2.1 file."""
 
@@ -185,7 +213,7 @@ class GKGV2:
     AllNames: List[EnhancedNameV2] = field(default_factory=list)
     Amounts: List[AmountV2] = field(default_factory=list)
     TranslationInfo: Optional[TranslationInfoV2] = None
-    ExtrasXML: List[CitationV2] = field(default_factory=list)
+    ExtrasXML: Optional[ExtrasV2] = None
 
 
 class GKGV2Collection:
